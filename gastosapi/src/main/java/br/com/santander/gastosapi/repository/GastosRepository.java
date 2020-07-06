@@ -22,7 +22,7 @@ public interface GastosRepository extends JpaRepository<Gastos, Long> {
   @Query(value = "update gastos set categoria = :categoria where id = :id", nativeQuery = true)
   void updateCategoriaGasto(@Param("categoria") Integer categoria, @Param("id") Long id);
 
-  @Query(value = "FROM Gastos g where g.data between :dataInicial and :dataFinal and g.codigoUsuario = :usuario")
+  @Query(value = "select * from gastos where data between :dataInicial and :dataFinal and codigousuario = :usuario", nativeQuery = true)
   Page<Gastos> retornaGastosPorUsuarioPaginado(@Param("usuario") Integer usuario, @Param("dataInicial") LocalDateTime dataInicial, @Param("dataFinal")
       LocalDateTime dataFinal, Pageable pageable);
 

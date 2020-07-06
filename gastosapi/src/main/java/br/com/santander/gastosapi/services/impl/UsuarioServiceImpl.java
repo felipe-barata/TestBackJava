@@ -1,6 +1,7 @@
 package br.com.santander.gastosapi.services.impl;
 
 import br.com.santander.gastosapi.domain.Usuario;
+import br.com.santander.gastosapi.enums.PerfilEnum;
 import br.com.santander.gastosapi.repository.UsuarioRepository;
 import br.com.santander.gastosapi.services.UsuarioService;
 import br.com.santander.gastosapi.utils.BCryptUtils;
@@ -29,6 +30,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     if (usuarioOptional.isEmpty()) {
       log.debug("persisteUsuario - usuario nao cadastrado");
       usuario.setSenha(bCryptUtils.gerarBCrypt(usuario.getSenha()));
+      usuario.setPerfil(PerfilEnum.ROLE_USUARIO);
       Usuario save = usuarioRepository.save(usuario);
       usuarioOptional = Optional.of(save);
     } else {
@@ -51,5 +53,16 @@ public class UsuarioServiceImpl implements UsuarioService {
       return Optional.of(usuario);
     }
     return Optional.empty();
+  }
+
+  @Override
+  public Optional<Usuario> buscarPorEmail(String email) {
+    log.info("buscarPorEmail - email: {}", email);
+    return usuarioRepository.findByEmail(email);
+  }
+
+  @Override
+  public Optional<Usuario> buscaPorCodigo(Integer codigo) {
+    return usuarioRepository.findById(codigo);
   }
 }

@@ -1,6 +1,8 @@
 package br.com.santander.gastosapi.services.impl;
 
+import br.com.santander.gastosapi.domain.Categoria;
 import br.com.santander.gastosapi.domain.Gastos;
+import br.com.santander.gastosapi.repository.CategoriaRepository;
 import br.com.santander.gastosapi.repository.GastosRepository;
 import br.com.santander.gastosapi.services.GastosService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -18,6 +21,9 @@ public class GastosServiceImpl implements GastosService {
 
   @Autowired
   private GastosRepository gastosRepository;
+
+  @Autowired
+  private CategoriaRepository categoriaRepository;
 
   @Override
   public Gastos insereGasto(Gastos gastos) {
@@ -42,6 +48,11 @@ public class GastosServiceImpl implements GastosService {
     log.info("atualizaCategoria - categoria: {}, gastoId: {}", categoria, gastoId);
     gastosRepository.updateCategoriaGasto(categoria, gastoId);
     return gastosRepository.findById(gastoId).orElse(null);
+  }
+
+  @Override
+  public Optional<Categoria> encontraCategoriaPorGastoDoUsuario(Integer usuario, String descricao) {
+    return categoriaRepository.encontraCategoriaPorGastoDoUsuario(usuario, descricao);
   }
 
 }

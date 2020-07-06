@@ -11,9 +11,10 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
-  Optional<Usuario> findByEmail(String email);
+  @Query(value = "select * from usuario where email = :email", nativeQuery = true)
+  Optional<Usuario> findByEmail(@Param("email") String email);
 
   @Modifying
   @Transactional

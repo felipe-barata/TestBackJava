@@ -10,4 +10,8 @@ public interface UsuarioService {
 
   Optional<Usuario> atualizaSenha(String email, String senha);
 
+  Optional<Usuario> buscarPorEmail(String email);
+
+  Optional<Usuario> buscaPorCodigo(Integer codigo);
+
 }

@@ -16,7 +16,7 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Integer> {
   @Query(value = "select * from categoria where LOWER(nome) like %:descricao%", nativeQuery = true)
   Page<Categoria> retornaCategoriaPorDescricao(@Param("descricao") String descricao, Pageable pageable);
 
-  @Query(value = "select c.* from gastos g inner join categoria c on (g.categoria = c.id) where c.codigousuario = :usuario and c.descricao = :descricao group by g.categoria LIMIT 1", nativeQuery = true)
+  @Query(value = "select c.* from gastos g inner join categoria c on (g.categoria = c.id) where g.codigousuario = :usuario and g.descricao = :descricao group by g.categoria LIMIT 1", nativeQuery = true)
   Optional<Categoria> encontraCategoriaPorGastoDoUsuario(@Param("usuario") Integer usuario, @Param("descricao") String descricao);
 
 }

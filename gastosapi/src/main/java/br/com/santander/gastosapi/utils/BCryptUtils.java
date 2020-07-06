@@ -15,5 +15,4 @@ public class BCryptUtils {
     BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
     return bCryptPasswordEncoder.matches(valor, cripto);
   }
-
 }
